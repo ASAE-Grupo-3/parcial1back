@@ -2,7 +2,6 @@ package co.edu.unicauca.distribuidos.core.proyecto.models;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,18 +23,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "Telefono")
-public class TelefonoEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTelefono;
-    @Column(name="tipo", nullable = false, length = 150)
-    private String tipo;
-    @Column(name="numero", nullable = false, length = 150)
-    private String numero;
+@Entity   
+@Table(name ="Cursos")
+public class CursoEntity {
 
-    @ManyToOne(cascade = { CascadeType.ALL })
-    @JoinColumn(name = "idPersona", nullable = false)
-	private EstudianteEntity objEstudiante;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idCurso;
+    @Column(name="nombre", nullable = false, length = 150)
+    private String nombre;
+    @Column(name="periodo", nullable = false, length = 150)
+    private String periodo;
+
+    @ManyToOne
+    @JoinColumn(name="idAsignatura", nullable=false)
+    private AsignaturaEntity objAsignatura;
+
 }

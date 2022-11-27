@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,8 +30,13 @@ public class PersonaEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idPersona;
+	
+	@Column(name="noIdentificacion", nullable = false, length = 150)
 	private String noIdentificacion;
+	@Column(name="tipoIdentificacion", nullable = false, length = 150)
 	private String tipoIdentificacion;
+	@Column(name="nombres", nullable = false, length = 150)
 	private String nombres;
+	@Column(name="apellidos", nullable = false, length = 150)
 	private String apellidos;
 }

@@ -1,6 +1,7 @@
 package co.edu.unicauca.distribuidos.core.proyecto.models;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,10 +27,12 @@ public class DireccionEntity {
 
 	@Id
 	private Integer idEstudiante;
+	@Column(name="numeroTelefono", nullable = false, length = 150)
 	private String numeroTelefono;
+	@Column(name="tipoTelefono", nullable = false, length = 150)
 	private String tipoTelefono;
 
-	@OneToOne(optional = false)
+	@OneToOne(optional = false, cascade = { CascadeType.ALL })
 	@MapsId
 	@JoinColumn(name = "idPersona", nullable = false)
 	private EstudianteEntity objEstudiante;
