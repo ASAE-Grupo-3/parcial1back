@@ -1,11 +1,8 @@
 package co.edu.unicauca.distribuidos.core.proyecto.models;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +22,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "Telefono")
 public class TelefonoEntity {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTelefono;
+    
     @Column(name="tipo", nullable = false, length = 150)
     private String tipo;
+    
     @Column(name="numero", nullable = false, length = 150)
     private String numero;
 
