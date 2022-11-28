@@ -1,7 +1,6 @@
 
 package co.edu.unicauca.distribuidos.core.proyecto.services.services.clienteServices;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +16,7 @@ import co.edu.unicauca.distribuidos.core.proyecto.repositories.EstudianteReposit
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.EstudianteDTO;
 
 @Service
-public class ClienteServiceImpl implements IClienteService {
+public class EstudianteServiceImpl implements IEstudianteService {
 
 	@Autowired
 	private EstudianteRepository servicioAccesoBaseDatos;
@@ -44,46 +43,55 @@ public class ClienteServiceImpl implements IClienteService {
 		EstudianteDTO EstudianteDTO = this.modelMapper.map(user, EstudianteDTO.class);
 		return EstudianteDTO;
 	}
-
+	/*
+	 * Registrar estudiante junto con su dirección y teléfonos.
+	 */
 	@Override
 	@Transactional()
 	public EstudianteDTO save(EstudianteDTO cliente) {
 
 		EstudianteEntity EstudianteEntity = this.modelMapper.map(cliente, EstudianteEntity.class);
 		EstudianteEntity.getObjDireccion().setObjEstudiante(EstudianteEntity);
-		//EstudianteEntity.getSolicitudes().forEach(objSolicitud -> objSolicitud.setObjUsuario(EstudianteEntity));
+
+		EstudianteEntity.getTelefonos().forEach(objTelefono -> objTelefono.setObjEstudiante(EstudianteEntity));
 
 		EstudianteEntity objEstudianteEntity = this.servicioAccesoBaseDatos.save(EstudianteEntity);
 		EstudianteDTO EstudianteDTO = this.modelMapper.map(objEstudianteEntity, EstudianteDTO.class);
 		return EstudianteDTO;
 	}
 
+	/*
+	 * Actualizar un estudiante junto con su dirección y teléfonos.
+	 */
 	@Override
 	@Transactional(readOnly = false)
-	public EstudianteDTO update(Integer id, EstudianteDTO objClienteConDatosNuevos) {
+	public EstudianteDTO update(Integer id, EstudianteDTO objEstudianteConDatosNuevos) {
 		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		EstudianteDTO EstudianteDTOActualizado = null;
-		EstudianteEntity objClienteAlmacenado = optional.get();
+		EstudianteEntity objEstudianteAlmacenado = optional.get();
 
-		if (objClienteAlmacenado != null) {
+		if (objEstudianteAlmacenado != null) {
 
-			/*
-			objClienteAlmacenado.setId(objClienteConDatosNuevos.getId());
-			objClienteAlmacenado.setNombre(objClienteConDatosNuevos.getNombre());
-			objClienteAlmacenado.setApellido(objClienteConDatosNuevos.getApellido());
-			objClienteAlmacenado.setEmail(objClienteConDatosNuevos.getEmail());
-			DireccionEntity objDireccionAlmacenada = objClienteAlmacenado.getObjDireccion();
-			objDireccionAlmacenada.setIdUsuario(objClienteConDatosNuevos.getObjDireccion().getId());
-			objDireccionAlmacenada.setCiudad(objClienteConDatosNuevos.getObjDireccion().getCiudad());
-			objDireccionAlmacenada.setCalle(objClienteConDatosNuevos.getObjDireccion().getCalle());
-			objDireccionAlmacenada.setPais(objClienteConDatosNuevos.getObjDireccion().getPais());
-			EstudianteEntity EstudianteEntityActualizado = this.servicioAccesoBaseDatos.save(objClienteAlmacenado);
+			objEstudianteAlmacenado.setIdPersona(objEstudianteConDatosNuevos.getIdPersona());
+			objEstudianteAlmacenado.setNombres(objEstudianteConDatosNuevos.getNombres());
+			objEstudianteAlmacenado.setApellidos(objEstudianteConDatosNuevos.getApellidos());
+			objEstudianteAlmacenado.setTipoIdentificacion(objEstudianteConDatosNuevos.getTipoIdentificacion());
+			objEstudianteAlmacenado.setNoIdentificacion(objEstudianteConDatosNuevos.getNoIdentificacion());
+			objEstudianteAlmacenado.setFechaIngreso(objEstudianteConDatosNuevos.getFechaIngreso());
+			DireccionEntity objDireccionAlmacenada = objEstudianteAlmacenado.getObjDireccion();
+			objDireccionAlmacenada.setIdEstudiante(objEstudianteConDatosNuevos.getObjDireccion().getIdEstudiante());
+			objDireccionAlmacenada.setTipoTelefono(objEstudianteConDatosNuevos.getObjDireccion().getTipoTelefono());
+			objDireccionAlmacenada.setNumeroTelefono(objEstudianteConDatosNuevos.getObjDireccion().getNumeroTelefono());
+			
+			EstudianteEntity EstudianteEntityActualizado = this.servicioAccesoBaseDatos.save(objEstudianteAlmacenado);
 			EstudianteDTOActualizado = this.modelMapper.map(EstudianteEntityActualizado, EstudianteDTO.class);
-			 */
+			 
 		}
 		return EstudianteDTOActualizado;
 	}
-
+	/*
+	 * Eliminar estudiante por su id.
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {

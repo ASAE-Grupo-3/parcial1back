@@ -3,7 +3,7 @@ package co.edu.unicauca.distribuidos.core.proyecto.services.services.clienteServ
 import java.util.List;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.EstudianteDTO;
 
-public interface IClienteService {
+public interface IEstudianteService {
 
 	public List<EstudianteDTO> findAll();
 
