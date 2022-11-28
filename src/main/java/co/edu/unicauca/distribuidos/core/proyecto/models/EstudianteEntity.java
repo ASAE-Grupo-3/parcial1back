@@ -21,8 +21,8 @@ public class EstudianteEntity extends PersonaEntity{
     @Column(name="fechaIngreso", nullable = false)
     private Date fechaIngreso;
 
-    @OneToOne(optional = false, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "objEstudiante")
-	private DireccionEntity objDireccion;
+    @OneToOne(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "objEstudiante")
+	private DireccionEntity objDireccion; 
 
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY, mappedBy = "objEstudiante")
 	private List<TelefonoEntity> telefonos;

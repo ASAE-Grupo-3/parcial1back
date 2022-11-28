@@ -28,7 +28,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Transactional(readOnly = true)
 	public List<EstudianteDTO> findAll() {
 		Iterable<EstudianteEntity> estudiantesEntity = this.servicioAccesoBaseDatos.findAll();
-		System.out.println("antes de la consulta");
+		System.out.println("antes de la consulta"+ estudiantesEntity);
 		List<EstudianteDTO> estudiantesDTO = this.modelMapper.map(estudiantesEntity, new TypeToken<List<EstudianteDTO>>() {
 		}.getType());
 		return estudiantesDTO;
