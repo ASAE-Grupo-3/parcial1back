@@ -1,5 +1,7 @@
 package co.edu.unicauca.distribuidos.core.proyecto.services.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ public class DireccionDTO {
 	private Integer idEstudiante;
 	private String numeroTelefono;
 	private String tipoTelefono;
+	@JsonIgnore
 	private EstudianteDTO objEstudiante;
 
 }

@@ -34,9 +34,9 @@ public class EstudianteEntity extends PersonaEntity{
         super();
     }
 
-    public EstudianteEntity(int idPersona, String  noIdentificacion, String tipoIdentificacion, String nombres, String apellidos, Date fechaIngreso)
+    public EstudianteEntity(String  noIdentificacion, String tipoIdentificacion, String nombres, String apellidos, Date fechaIngreso)
     {
-        super(idPersona, noIdentificacion, tipoIdentificacion, nombres,  apellidos);
+        super(noIdentificacion, tipoIdentificacion, nombres,  apellidos);
         this.fechaIngreso = fechaIngreso;
     }
 }
