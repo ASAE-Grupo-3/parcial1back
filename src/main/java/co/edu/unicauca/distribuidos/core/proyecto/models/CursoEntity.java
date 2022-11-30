@@ -2,6 +2,7 @@ package co.edu.unicauca.distribuidos.core.proyecto.models;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class CursoEntity implements Serializable{
     @Column(name="periodo", nullable = false, length = 150)
     private String periodo;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name="idAsignatura", nullable=false)
     private AsignaturaEntity objAsignatura;
 

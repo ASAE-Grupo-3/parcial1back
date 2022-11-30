@@ -56,12 +56,7 @@ public class DocenteRestController {
 
 	@DeleteMapping("/docentes/{id}")
 	public Boolean delete(@PathVariable Integer id) {
-		Boolean bandera = false;
-		DocenteDTO docenteActual = docenteService.findById(id);
-		if (docenteActual != null) {
-			bandera = docenteService.delete(id);
-		}
-		return bandera;
+		return this.docenteService.delete(id);
 
 	}
 

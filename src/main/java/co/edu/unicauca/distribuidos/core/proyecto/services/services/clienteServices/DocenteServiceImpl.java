@@ -37,9 +37,9 @@ public class DocenteServiceImpl implements IDocenteService {
 	@Transactional(readOnly = true)
 	public DocenteDTO findById(Integer id) {
 		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		DocenteEntity user = optional.get();
+		DocenteEntity docente = optional.get();
 		System.out.println("antes de la consulta");
-		DocenteDTO DocenteDTO = this.modelMapper.map(user, DocenteDTO.class);
+		DocenteDTO DocenteDTO = this.modelMapper.map(docente, DocenteDTO.class);
 		return DocenteDTO;
 	}
 	
@@ -56,7 +56,7 @@ public class DocenteServiceImpl implements IDocenteService {
 	}
 
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional()
 	public DocenteDTO update(Integer id, DocenteDTO objDocenteConDatosNuevos) {
 		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		DocenteDTO docenteDTOActualizado = null;
@@ -84,13 +84,13 @@ public class DocenteServiceImpl implements IDocenteService {
 	}
 	
 	@Override
-	@Transactional(readOnly = false)
+	@Transactional()
 	public boolean delete(Integer id) {
 		boolean bandera = false;
-		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		DocenteEntity docente = optional.get();
-		if (docente != null) {
-			this.servicioAccesoBaseDatos.delete(docente);
+		//DocenteEntity optional = this.servicioAccesoBaseDatos.findById(id).orElse(null);
+		if (this.servicioAccesoBaseDatos.existsById(id)) {
+			this.servicioAccesoBaseDatos.deleteById(id);
+			
 			bandera = true;
 		}
 		return bandera;
