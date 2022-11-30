@@ -46,9 +46,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		return EstudianteDTO;
 	}
 	
-	/*
-	 * Registrar estudiante junto con su dirección y teléfonos.
-	 */
+
 	@Override
 	@Transactional()
 	public EstudianteDTO save(EstudianteDTO cliente) {
@@ -63,9 +61,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		return EstudianteDTO;
 	}
 
-	/*
-	 * Actualizar un estudiante junto con su dirección y teléfonos.
-	 */
 	@Override
 	@Transactional(readOnly = false)
 	public EstudianteDTO update(Integer id, EstudianteDTO objEstudianteConDatosNuevos) {
@@ -93,9 +88,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		return EstudianteDTOActualizado;
 	}
 	
-	/*
-	 * Eliminar estudiante por su id.
-	 */
 	@Override
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {

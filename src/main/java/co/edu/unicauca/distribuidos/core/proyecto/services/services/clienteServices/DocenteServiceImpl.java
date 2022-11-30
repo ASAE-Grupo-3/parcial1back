@@ -3,18 +3,14 @@ package co.edu.unicauca.distribuidos.core.proyecto.services.services.clienteServ
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.transaction.annotation.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import co.edu.unicauca.distribuidos.core.proyecto.models.DocenteEntity;
-import co.edu.unicauca.distribuidos.core.proyecto.models.DireccionEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.repositories.DocenteRepository;
-import co.edu.unicauca.distribuidos.core.proyecto.repositories.EstudianteRepository;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.DocenteDTO;
 
 @Service
@@ -61,47 +57,42 @@ public class DocenteServiceImpl implements IDocenteService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public DocenteDTO update(Integer id, DocenteDTO objEstudianteConDatosNuevos) {
+	public DocenteDTO update(Integer id, DocenteDTO objDocenteConDatosNuevos) {
 		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		DocenteDTO docenteDTOActualizado = null;
-		DocenteEntity objEstudianteAlmacenado = optional.get();
+		DocenteEntity objDocenteAlmacenado = optional.get();
 
-		/*
-		if (objEstudianteAlmacenado != null) {
+		
+		if (objDocenteAlmacenado != null) {
 
-			objEstudianteAlmacenado.setIdPersona(objEstudianteConDatosNuevos.getIdPersona());
-			objEstudianteAlmacenado.setNombres(objEstudianteConDatosNuevos.getNombres());
-			objEstudianteAlmacenado.setApellidos(objEstudianteConDatosNuevos.getApellidos());
-			objEstudianteAlmacenado.setTipoIdentificacion(objEstudianteConDatosNuevos.getTipoIdentificacion());
-			objEstudianteAlmacenado.setNoIdentificacion(objEstudianteConDatosNuevos.getNoIdentificacion());
-			objEstudianteAlmacenado.setFechaIngreso(objEstudianteConDatosNuevos.getFechaIngreso());
-			DireccionEntity objDireccionAlmacenada = objEstudianteAlmacenado.getObjDireccion();
-			objDireccionAlmacenada.setIdEstudiante(objEstudianteConDatosNuevos.getObjDireccion().getIdEstudiante());
-			objDireccionAlmacenada.setTipoTelefono(objEstudianteConDatosNuevos.getObjDireccion().getTipoTelefono());
-			objDireccionAlmacenada.setNumeroTelefono(objEstudianteConDatosNuevos.getObjDireccion().getNumeroTelefono());
+			objDocenteAlmacenado.setIdPersona(objDocenteConDatosNuevos.getIdPersona());
+			objDocenteAlmacenado.setNombres(objDocenteConDatosNuevos.getNombres());
+			objDocenteAlmacenado.setApellidos(objDocenteConDatosNuevos.getApellidos());
+			objDocenteAlmacenado.setTipoIdentificacion(objDocenteConDatosNuevos.getTipoIdentificacion());
+			objDocenteAlmacenado.setNoIdentificacion(objDocenteConDatosNuevos.getNoIdentificacion());
 			
-			DocenteEntity DocenteEntityActualizado = this.servicioAccesoBaseDatos.save(objEstudianteAlmacenado);
+			objDocenteAlmacenado.setUniversidad(objDocenteConDatosNuevos.getUniversidad());
+			objDocenteAlmacenado.setTipoDocente(objDocenteConDatosNuevos.getTipoDocente());
+			objDocenteAlmacenado.setSalario(objDocenteConDatosNuevos.getSalario());
+			
+			DocenteEntity DocenteEntityActualizado = this.servicioAccesoBaseDatos.save(objDocenteAlmacenado);
 			docenteDTOActualizado = this.modelMapper.map(DocenteEntityActualizado, DocenteDTO.class);
 			 
 		}
-		*/
+		
 		return docenteDTOActualizado;
 	}
 	
-	/*
-	 * Eliminar estudiante por su id.
-	 */
 	@Override
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {
 		boolean bandera = false;
 		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		DocenteEntity user = optional.get();
-		if (user != null) {
-			this.servicioAccesoBaseDatos.delete(user);
+		DocenteEntity docente = optional.get();
+		if (docente != null) {
+			this.servicioAccesoBaseDatos.delete(docente);
 			bandera = true;
 		}
-
 		return bandera;
 	}
 

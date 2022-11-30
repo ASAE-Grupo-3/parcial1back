@@ -1,5 +1,6 @@
 package co.edu.unicauca.distribuidos.core.proyecto.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "Asignaturas")
-public class AsignaturaEntity {
+public class AsignaturaEntity implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

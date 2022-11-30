@@ -1,5 +1,7 @@
 package co.edu.unicauca.distribuidos.core.proyecto.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +22,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity   
 @Table(name ="Cursos")
-public class CursoEntity {
+public class CursoEntity implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -409626244432219617L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

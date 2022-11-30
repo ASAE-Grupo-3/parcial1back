@@ -1,6 +1,7 @@
 package co.edu.unicauca.distribuidos.core.proyecto.services.DTO;
 
-    import java.util.List;
+    import java.io.Serializable;
+import java.util.List;
 
 
     import lombok.AllArgsConstructor;
@@ -12,9 +13,13 @@ package co.edu.unicauca.distribuidos.core.proyecto.services.DTO;
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public class AsignaturaDTO {
+    public class AsignaturaDTO implements Serializable{
     
-        private Integer idAsignatura;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7946102287893593415L;
+		private Integer idAsignatura;
         private String nombre;
         
         private List<DocenteDTO> docentes;
