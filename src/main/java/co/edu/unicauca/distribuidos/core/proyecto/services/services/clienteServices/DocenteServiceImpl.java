@@ -11,68 +11,62 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import co.edu.unicauca.distribuidos.core.proyecto.models.EstudianteEntity;
+import co.edu.unicauca.distribuidos.core.proyecto.models.DocenteEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.models.DireccionEntity;
+import co.edu.unicauca.distribuidos.core.proyecto.repositories.DocenteRepository;
 import co.edu.unicauca.distribuidos.core.proyecto.repositories.EstudianteRepository;
-import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.EstudianteDTO;
+import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.DocenteDTO;
 
 @Service
-public class DocenteServiceImpl implements IEstudianteService {
+public class DocenteServiceImpl implements IDocenteService {
 
 	@Autowired
-	private EstudianteRepository servicioAccesoBaseDatos;
+	private DocenteRepository servicioAccesoBaseDatos;
 
 	@Autowired
-	@Qualifier("mapperEstudiante")
+	@Qualifier("mapperDocente")
 	private ModelMapper modelMapper;
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<EstudianteDTO> findAll() {
-		Iterable<EstudianteEntity> estudiantesEntity = this.servicioAccesoBaseDatos.findAll();
-		System.out.println("antes de la consulta"+ estudiantesEntity);	
-		List<EstudianteDTO> estudiantesDTO = this.modelMapper.map(estudiantesEntity, new TypeToken<List<EstudianteDTO>>() {
+	public List<DocenteDTO> findAll() {
+		Iterable<DocenteEntity> docentesEntity = this.servicioAccesoBaseDatos.findAll();
+		System.out.println("antes de la consulta"+ docentesEntity);	
+		List<DocenteDTO> docentesDTO = this.modelMapper.map(docentesEntity, new TypeToken<List<DocenteDTO>>() {
 		}.getType());
-		return estudiantesDTO;
+		return docentesDTO;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public EstudianteDTO findById(Integer id) {
-		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		EstudianteEntity user = optional.get();
+	public DocenteDTO findById(Integer id) {
+		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
+		DocenteEntity user = optional.get();
 		System.out.println("antes de la consulta");
-		EstudianteDTO EstudianteDTO = this.modelMapper.map(user, EstudianteDTO.class);
-		return EstudianteDTO;
+		DocenteDTO DocenteDTO = this.modelMapper.map(user, DocenteDTO.class);
+		return DocenteDTO;
 	}
 	
-	/*
-	 * Registrar estudiante junto con su dirección y teléfonos.
-	 */
+
 	@Override
 	@Transactional()
-	public EstudianteDTO save(EstudianteDTO cliente) {
+	public DocenteDTO save(DocenteDTO cliente) {
 
-		EstudianteEntity EstudianteEntity = this.modelMapper.map(cliente, EstudianteEntity.class);
-		EstudianteEntity.getObjDireccion().setObjEstudiante(EstudianteEntity);
+		DocenteEntity docenteEntity = this.modelMapper.map(cliente, DocenteEntity.class);
 
-		EstudianteEntity.getTelefonos().forEach(objTelefono -> objTelefono.setObjEstudiante(EstudianteEntity));
-
-		EstudianteEntity objEstudianteEntity = this.servicioAccesoBaseDatos.save(EstudianteEntity);
-		EstudianteDTO EstudianteDTO = this.modelMapper.map(objEstudianteEntity, EstudianteDTO.class);
-		return EstudianteDTO;
+		DocenteEntity objDocenteEntity = this.servicioAccesoBaseDatos.save(docenteEntity);
+		DocenteDTO DocenteDTO = this.modelMapper.map(objDocenteEntity, DocenteDTO.class);
+		return DocenteDTO;
 	}
 
-	/*
-	 * Actualizar un estudiante junto con su dirección y teléfonos.
-	 */
 	@Override
 	@Transactional(readOnly = false)
-	public EstudianteDTO update(Integer id, EstudianteDTO objEstudianteConDatosNuevos) {
-		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		EstudianteDTO EstudianteDTOActualizado = null;
-		EstudianteEntity objEstudianteAlmacenado = optional.get();
+	public DocenteDTO update(Integer id, DocenteDTO objEstudianteConDatosNuevos) {
+		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
+		DocenteDTO docenteDTOActualizado = null;
+		DocenteEntity objEstudianteAlmacenado = optional.get();
 
+		/*
 		if (objEstudianteAlmacenado != null) {
 
 			objEstudianteAlmacenado.setIdPersona(objEstudianteConDatosNuevos.getIdPersona());
@@ -86,11 +80,12 @@ public class DocenteServiceImpl implements IEstudianteService {
 			objDireccionAlmacenada.setTipoTelefono(objEstudianteConDatosNuevos.getObjDireccion().getTipoTelefono());
 			objDireccionAlmacenada.setNumeroTelefono(objEstudianteConDatosNuevos.getObjDireccion().getNumeroTelefono());
 			
-			EstudianteEntity EstudianteEntityActualizado = this.servicioAccesoBaseDatos.save(objEstudianteAlmacenado);
-			EstudianteDTOActualizado = this.modelMapper.map(EstudianteEntityActualizado, EstudianteDTO.class);
+			DocenteEntity DocenteEntityActualizado = this.servicioAccesoBaseDatos.save(objEstudianteAlmacenado);
+			docenteDTOActualizado = this.modelMapper.map(DocenteEntityActualizado, DocenteDTO.class);
 			 
 		}
-		return EstudianteDTOActualizado;
+		*/
+		return docenteDTOActualizado;
 	}
 	
 	/*
@@ -100,8 +95,8 @@ public class DocenteServiceImpl implements IEstudianteService {
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {
 		boolean bandera = false;
-		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		EstudianteEntity user = optional.get();
+		Optional<DocenteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
+		DocenteEntity user = optional.get();
 		if (user != null) {
 			this.servicioAccesoBaseDatos.delete(user);
 			bandera = true;

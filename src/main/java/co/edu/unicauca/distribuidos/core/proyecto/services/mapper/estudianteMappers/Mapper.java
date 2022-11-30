@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import co.edu.unicauca.distribuidos.core.proyecto.models.AsignaturaEntity;
+import co.edu.unicauca.distribuidos.core.proyecto.models.DocenteEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.models.EstudianteEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.AsignaturaDTO;
+import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.DocenteDTO;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.EstudianteDTO;
 
 @Configuration
@@ -26,6 +28,14 @@ public class Mapper {
         ModelMapper objMapper = new ModelMapper();
         TypeMap<AsignaturaEntity, AsignaturaDTO> mapa = objMapper.emptyTypeMap(AsignaturaEntity.class, AsignaturaDTO.class);
         mapa.addMappings(n -> n.skip(AsignaturaDTO::setCursos)).implicitMappings();
+        return objMapper;
+    }
+    
+    @Bean(name = "mapperDocente")
+    public ModelMapper modelMapperDocente() {
+        ModelMapper objMapper = new ModelMapper();
+        TypeMap<DocenteEntity, DocenteDTO> mapa = objMapper.emptyTypeMap(DocenteEntity.class, DocenteDTO.class);
+        //mapa.addMappings(n -> n.skip(DocenteDTO::setCursos)).implicitMappings();
         return objMapper;
     }
 }
