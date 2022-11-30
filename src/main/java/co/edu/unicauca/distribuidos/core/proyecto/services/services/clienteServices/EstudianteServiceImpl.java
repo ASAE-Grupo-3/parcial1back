@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import co.edu.unicauca.distribuidos.core.proyecto.models.EstudianteEntity;
@@ -22,6 +23,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	private EstudianteRepository servicioAccesoBaseDatos;
 
 	@Autowired
+	@Qualifier("mapperEstudiante")
 	private ModelMapper modelMapper;
 
 	@Override
