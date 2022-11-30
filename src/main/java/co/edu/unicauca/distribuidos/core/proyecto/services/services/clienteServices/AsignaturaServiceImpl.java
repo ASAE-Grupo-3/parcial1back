@@ -47,12 +47,15 @@ public class AsignaturaServiceImpl implements IAsignaturaService{
     @Override
     @Transactional
     public AsignaturaDTO save(AsignaturaDTO asignaturaDTO) {
-        AsignaturaEntity asignaturaEntity = this.modelMapper.map(asignaturaDTO, AsignaturaEntity.class);
-        asignaturaEntity.getDocentes().forEach(objDocente -> objDocente.addAsignatura(asignaturaEntity));
-        
-        AsignaturaEntity objAsignaturaEntity = servicioAccesoBaseDatos.save(asignaturaEntity);
-        AsignaturaDTO objasignaturaDTO = this.modelMapper.map(objAsignaturaEntity, AsignaturaDTO.class);
-        
+        AsignaturaDTO objasignaturaDTO = null;
+        if(asignaturaDTO.getCursos().size() > 0 && asignaturaDTO.getDocentes().size() >= 2){
+            AsignaturaEntity asignaturaEntity = this.modelMapper.map(asignaturaDTO, AsignaturaEntity.class);
+            asignaturaEntity.getDocentes().forEach(objDocente -> objDocente.addAsignatura(asignaturaEntity));
+            asignaturaEntity.getCursos().forEach(objCurso -> objCurso.setObjAsignatura(asignaturaEntity));
+
+            AsignaturaEntity objAsignaturaEntity = servicioAccesoBaseDatos.save(asignaturaEntity);
+            objasignaturaDTO = this.modelMapper.map(objAsignaturaEntity, AsignaturaDTO.class);
+        }
         return objasignaturaDTO;
     }
 

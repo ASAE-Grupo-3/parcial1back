@@ -2,6 +2,8 @@ package co.edu.unicauca.distribuidos.core.proyecto.models;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,11 +35,11 @@ public class AsignaturaEntity {
 	@Column(name = "nombre", nullable = false, length = 150)
 	private String nombre;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
 	@JoinTable(name = "Docente_Asignatura", joinColumns = @JoinColumn(name = "idAsignatura"), inverseJoinColumns = @JoinColumn(name = "idPersona"))
 	private List<DocenteEntity> docentes  = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "objAsignatura")
+	@OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER, mappedBy = "objAsignatura")
 	private List<CursoEntity> Cursos  = new ArrayList<>();
 
 }
