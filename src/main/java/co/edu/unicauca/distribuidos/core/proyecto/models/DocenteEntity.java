@@ -43,4 +43,9 @@ public class DocenteEntity extends PersonaEntity {
         this.tipoDocente = tipoDocente;
         this.salario = salario;
     }
+
+    public void addAsignatura(AsignaturaEntity asignatura){
+        Asignaturas.add(asignatura);
+    }
+
 }

@@ -17,7 +17,7 @@ import co.edu.unicauca.distribuidos.core.proyecto.repositories.EstudianteReposit
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.EstudianteDTO;
 
 @Service
-public class DocenteServiceImpl implements IEstudianteService {
+public class DocenteServiceImpl implements IDocenteService {
 
 	@Autowired
 	private EstudianteRepository servicioAccesoBaseDatos;

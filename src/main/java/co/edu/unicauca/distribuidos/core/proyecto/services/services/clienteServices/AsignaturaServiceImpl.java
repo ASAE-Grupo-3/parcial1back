@@ -7,14 +7,17 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.unicauca.distribuidos.core.proyecto.models.AsignaturaEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.repositories.AsignaturaRepository;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.AsignaturaDTO;
 
+@Service
 public class AsignaturaServiceImpl implements IAsignaturaService{
 
+    @Autowired
     private AsignaturaRepository servicioAccesoBaseDatos;
 
     @Autowired
@@ -42,13 +45,19 @@ public class AsignaturaServiceImpl implements IAsignaturaService{
     }
 
     @Override
-    public AsignaturaDTO save(AsignaturaDTO cliente) {
-        // TODO Auto-generated method stub
-        return null;
+    @Transactional
+    public AsignaturaDTO save(AsignaturaDTO asignaturaDTO) {
+        AsignaturaEntity asignaturaEntity = this.modelMapper.map(asignaturaDTO, AsignaturaEntity.class);
+        asignaturaEntity.getDocentes().forEach(objDocente -> objDocente.addAsignatura(asignaturaEntity));
+        
+        AsignaturaEntity objAsignaturaEntity = servicioAccesoBaseDatos.save(asignaturaEntity);
+        AsignaturaDTO objasignaturaDTO = this.modelMapper.map(objAsignaturaEntity, AsignaturaDTO.class);
+        
+        return objasignaturaDTO;
     }
 
     @Override
-    public AsignaturaDTO update(Integer id, AsignaturaDTO cliente) {
+    public AsignaturaDTO update(Integer id, AsignaturaDTO asignaturaDTO) {
         // TODO Auto-generated method stub
         return null;
     }
