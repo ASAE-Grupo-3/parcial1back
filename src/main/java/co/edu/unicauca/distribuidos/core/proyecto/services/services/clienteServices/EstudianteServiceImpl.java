@@ -31,8 +31,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	public List<EstudianteDTO> findAll() {
 		Iterable<EstudianteEntity> estudiantesEntity = this.servicioAccesoBaseDatos.findAll();
 		System.out.println("antes de la consulta"+ estudiantesEntity);	
-		List<EstudianteDTO> estudiantesDTO = this.modelMapper.map(estudiantesEntity, new TypeToken<List<EstudianteDTO>>() {
-		}.getType());
+		List<EstudianteDTO> estudiantesDTO = this.modelMapper.map(estudiantesEntity, new TypeToken<List<EstudianteDTO>>() {}.getType());
 		return estudiantesDTO;
 	}
 
@@ -49,9 +48,9 @@ public class EstudianteServiceImpl implements IEstudianteService {
 
 	@Override
 	@Transactional()
-	public EstudianteDTO save(EstudianteDTO cliente) {
+	public EstudianteDTO save(EstudianteDTO estudiante) {
 
-		EstudianteEntity EstudianteEntity = this.modelMapper.map(cliente, EstudianteEntity.class);
+		EstudianteEntity EstudianteEntity = this.modelMapper.map(estudiante, EstudianteEntity.class);
 		EstudianteEntity.getObjDireccion().setObjEstudiante(EstudianteEntity);
 
 		EstudianteEntity.getTelefonos().forEach(objTelefono -> objTelefono.setObjEstudiante(EstudianteEntity));
@@ -64,23 +63,18 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Override
 	@Transactional(readOnly = false)
 	public EstudianteDTO update(Integer id, EstudianteDTO objEstudianteConDatosNuevos) {
+		EstudianteEntity EstudianteEntity = this.modelMapper.map(objEstudianteConDatosNuevos, EstudianteEntity.class);
+		EstudianteEntity.getObjDireccion().setObjEstudiante(EstudianteEntity);
+
+		EstudianteEntity.getTelefonos().forEach(objTelefono -> objTelefono.setObjEstudiante(EstudianteEntity));
+		
 		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		EstudianteDTO EstudianteDTOActualizado = null;
 		EstudianteEntity objEstudianteAlmacenado = optional.get();
 
 		if (objEstudianteAlmacenado != null) {
 
-			objEstudianteAlmacenado.setIdPersona(objEstudianteConDatosNuevos.getIdPersona());
-			objEstudianteAlmacenado.setNombres(objEstudianteConDatosNuevos.getNombres());
-			objEstudianteAlmacenado.setApellidos(objEstudianteConDatosNuevos.getApellidos());
-			objEstudianteAlmacenado.setTipoIdentificacion(objEstudianteConDatosNuevos.getTipoIdentificacion());
-			objEstudianteAlmacenado.setNoIdentificacion(objEstudianteConDatosNuevos.getNoIdentificacion());
-			objEstudianteAlmacenado.setFechaIngreso(objEstudianteConDatosNuevos.getFechaIngreso());
-			DireccionEntity objDireccionAlmacenada = objEstudianteAlmacenado.getObjDireccion();
-			objDireccionAlmacenada.setIdEstudiante(objEstudianteConDatosNuevos.getObjDireccion().getIdEstudiante());
-			objDireccionAlmacenada.setTipoTelefono(objEstudianteConDatosNuevos.getObjDireccion().getTipoTelefono());
-			objDireccionAlmacenada.setNumeroTelefono(objEstudianteConDatosNuevos.getObjDireccion().getNumeroTelefono());
-			
+			objEstudianteAlmacenado = EstudianteEntity;
 			EstudianteEntity EstudianteEntityActualizado = this.servicioAccesoBaseDatos.save(objEstudianteAlmacenado);
 			EstudianteDTOActualizado = this.modelMapper.map(EstudianteEntityActualizado, EstudianteDTO.class);
 			 

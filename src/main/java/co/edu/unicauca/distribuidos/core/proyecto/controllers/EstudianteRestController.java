@@ -31,34 +31,34 @@ public class EstudianteRestController {
 
 	@GetMapping("/estudiantes/{id}")
 	public EstudianteDTO show(@PathVariable Integer id) {
-		EstudianteDTO objCliente = null;
-		objCliente = EstudianteService.findById(id);
-		return objCliente;
+		EstudianteDTO objEstudiante = null;
+		objEstudiante = EstudianteService.findById(id);
+		return objEstudiante;
 	}
 
 	@PostMapping("/estudiantes")
-	public EstudianteDTO create(@RequestBody EstudianteDTO cliente) {
-		EstudianteDTO objCliente = null;
-		objCliente = EstudianteService.save(cliente);
-		return objCliente;
+	public EstudianteDTO create(@RequestBody EstudianteDTO estudiante) {
+		EstudianteDTO objEstudiante = null;
+		objEstudiante = EstudianteService.save(estudiante);
+		return objEstudiante;
 	}
 
 	@PutMapping("/estudiantes/{id}")
-	public EstudianteDTO update(@RequestBody EstudianteDTO cliente, @PathVariable Integer id) {
-		EstudianteDTO objCliente = null;
+	public EstudianteDTO update(@RequestBody EstudianteDTO estudiante, @PathVariable Integer id) {
+		EstudianteDTO objEstudiante = null;
 		System.out.println("actualizando cliente");
-		EstudianteDTO clienteActual = EstudianteService.findById(id);
-		if (clienteActual != null) {
-			objCliente = EstudianteService.update(id, cliente);
+		EstudianteDTO EstudianteActual = EstudianteService.findById(id);
+		if (EstudianteActual != null) {
+			objEstudiante = EstudianteService.update(id, estudiante);
 		}
-		return objCliente;
+		return objEstudiante;
 	}
 
 	@DeleteMapping("/estudiantes/{id}")
 	public Boolean delete(@PathVariable Integer id) {
 		Boolean bandera = false;
-		EstudianteDTO clienteActual = EstudianteService.findById(id);
-		if (clienteActual != null) {
+		EstudianteDTO estudianteActual = EstudianteService.findById(id);
+		if (estudianteActual != null) {
 			bandera = EstudianteService.delete(id);
 		}
 		return bandera;
