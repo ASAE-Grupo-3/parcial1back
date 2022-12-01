@@ -10,9 +10,9 @@ public interface ICursoService {
 
 	public CursoDTO findById(Integer id);
 
-	public CursoDTO save(CursoDTO cliente);
+	public CursoDTO save(CursoDTO curso);
 
-	public CursoDTO update(Integer id, CursoDTO cliente);
+	public CursoDTO update(Integer id, CursoDTO curso);
 
 	public boolean delete(Integer id);
     
