@@ -3,6 +3,7 @@ package co.edu.unicauca.distribuidos.core.proyecto.services.DTO;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class AsignaturaDTO implements Serializable{
     private Integer idAsignatura;
     private String nombre;
     private List<DocenteDTO> docentes;
-    @JsonIgnore
-    private List<CursoDTO> Cursos;
+    @JsonBackReference
+    private List<CursoDTO> cursos;
     
 }

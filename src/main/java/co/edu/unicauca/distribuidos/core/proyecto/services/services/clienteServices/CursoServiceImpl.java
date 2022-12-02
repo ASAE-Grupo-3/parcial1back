@@ -53,7 +53,6 @@ public class CursoServiceImpl implements ICursoService {
         List<CursoEntity> cursoList = new ArrayList<>();
         cursoList.add(CursoEntity);
 		CursoEntity.getObjAsignatura().setCursos(cursoList);
-
 		CursoEntity objCursoEntity = this.servicioAccesoBaseDatos.save(CursoEntity);
 		CursoDTO CursoDTO = this.modelMapper.map(objCursoEntity, CursoDTO.class);
 		return CursoDTO;
@@ -69,14 +68,7 @@ public class CursoServiceImpl implements ICursoService {
 	@Override
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {
-		boolean bandera = false;
-		Optional<CursoEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		CursoEntity user = optional.get();
-		if (user != null) {
-			this.servicioAccesoBaseDatos.delete(user);
-			bandera = true;
-		}
-
-		return bandera;
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
