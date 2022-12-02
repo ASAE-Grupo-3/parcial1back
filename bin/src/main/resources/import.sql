@@ -12,3 +12,13 @@ INSERT INTO `estudiante` (`idPersona`, `apellidos`, `noIdentificacion`, `nombres
 INSERT INTO `estudiante` (`idPersona`, `apellidos`, `noIdentificacion`, `nombres`, `tipoIdentificacion`, `fechaIngreso`) VALUES (NULL, 'Diaz', '1061814323', 'Luis', 'CC', '2022-11-28 01:51:17.000000');
 INSERT INTO `estudiante` (`idPersona`, `apellidos`, `noIdentificacion`, `nombres`, `tipoIdentificacion`, `fechaIngreso`) VALUES (NULL, 'Andrade', '432424433', 'Melissa', 'CC', '2022-11-28 01:51:17.000000');
 
+INSERT INTO `docente` (`idPersona`, `apellidos`, `noIdentificacion`, `nombres`, `tipoIdentificacion`, `salario`, `tipoDocente`, `universidad`) VALUES (null, 'Rojas', '10801080123', 'Pedro', 'CC', 2500000, 'Planta', 'Unicauca');
+INSERT INTO `asignaturas`(`idAsignatura`, `nombre`) VALUES(null, 'ASAE');
+INSERT INTO `cursos` (`idCurso`, `nombre`, `periodo`, `idAsignatura`) VALUES (null, 'B', '2022-2',1); 
+INSERT INTO `docente_asignatura`(`idPersona`, `idAsignatura`) VALUES(1, 1);
+
+INSERT INTO `docente` (`idPersona`, `apellidos`, `noIdentificacion`, `nombres`, `tipoIdentificacion`, `universidad`, `tipoDocente`, `salario`) VALUES (NULL, 'Buitron', '8012346', 'Sandra', 'CC', 'Universidad Del Cauca','planta','7000000');
+INSERT INTO `asignaturas` (`idAsignatura`, `nombre`) VALUES (null, 'Ingeniería de Requisitos'); 
+INSERT INTO `cursos` (`idCurso`, `nombre`, `periodo`, `idAsignatura`) VALUES (null, 'A', '2022-2',2); 
+INSERT INTO `docente_asignatura` (`idPersona`, `idAsignatura`) VALUES (2, 2); 
+
