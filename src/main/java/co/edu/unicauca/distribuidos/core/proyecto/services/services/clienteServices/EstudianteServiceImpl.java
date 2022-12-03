@@ -50,14 +50,19 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Transactional()
 	public EstudianteDTO save(EstudianteDTO estudiante) {
 
-		EstudianteEntity EstudianteEntity = this.modelMapper.map(estudiante, EstudianteEntity.class);
-		EstudianteEntity.getObjDireccion().setObjEstudiante(EstudianteEntity);
+		EstudianteDTO estudianteDTO = null;
+		if (!this.servicioAccesoBaseDatos.findBynoIdentificacion(estudiante.getNoIdentificacion()).isPresent()) {
+			EstudianteEntity EstudianteEntity = this.modelMapper.map(estudiante, EstudianteEntity.class);
+			EstudianteEntity.getObjDireccion().setObjEstudiante(EstudianteEntity);
 
-		EstudianteEntity.getTelefonos().forEach(objTelefono -> objTelefono.setObjEstudiante(EstudianteEntity));
+			EstudianteEntity.getTelefonos().forEach(objTelefono -> objTelefono.setObjEstudiante(EstudianteEntity));
 
-		EstudianteEntity objEstudianteEntity = this.servicioAccesoBaseDatos.save(EstudianteEntity);
-		EstudianteDTO EstudianteDTO = this.modelMapper.map(objEstudianteEntity, EstudianteDTO.class);
-		return EstudianteDTO;
+			EstudianteEntity objEstudianteEntity = this.servicioAccesoBaseDatos.save(EstudianteEntity);
+			estudianteDTO = this.modelMapper.map(objEstudianteEntity, EstudianteDTO.class);
+		}
+		
+		
+		return estudianteDTO;
 	}
 
 	@Override
