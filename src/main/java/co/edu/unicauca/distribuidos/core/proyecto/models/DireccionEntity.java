@@ -3,6 +3,7 @@ package co.edu.unicauca.distribuidos.core.proyecto.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -29,7 +30,7 @@ public class DireccionEntity {
 	@Column(name="tipoTelefono", nullable = false, length = 150)
 	private String tipoTelefono;
 
-	@OneToOne(optional = false, cascade = { CascadeType.ALL })
+	@OneToOne(optional = false, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "idPersona", nullable = false)
 	private EstudianteEntity objEstudiante;

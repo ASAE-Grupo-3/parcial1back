@@ -22,24 +22,24 @@ import co.edu.unicauca.distribuidos.core.proyecto.services.services.clienteServi
 public class EstudianteRestController {
 
 	@Autowired
-	private IEstudianteService EstudianteService;
+	private IEstudianteService estudianteService;
 
 	@GetMapping("/estudiantes")
 	public List<EstudianteDTO> index() {
-		return EstudianteService.findAll();
+		return estudianteService.findAll();
 	}
 
 	@GetMapping("/estudiantes/{id}")
 	public EstudianteDTO show(@PathVariable Integer id) {
 		EstudianteDTO objEstudiante = null;
-		objEstudiante = EstudianteService.findById(id);
+		objEstudiante = estudianteService.findById(id);
 		return objEstudiante;
 	}
 
 	@PostMapping("/estudiantes")
 	public EstudianteDTO create(@RequestBody EstudianteDTO estudiante) {
 		EstudianteDTO objEstudiante = null;
-		objEstudiante = EstudianteService.save(estudiante);
+		objEstudiante = estudianteService.save(estudiante);
 		return objEstudiante;
 	}
 
@@ -47,16 +47,16 @@ public class EstudianteRestController {
 	public EstudianteDTO update(@RequestBody EstudianteDTO estudiante, @PathVariable Integer id) {
 		EstudianteDTO objEstudiante = null;
 		System.out.println("actualizando cliente");
-		EstudianteDTO EstudianteActual = EstudianteService.findById(id);
+		EstudianteDTO EstudianteActual = estudianteService.findById(id);
 		if (EstudianteActual != null) {
-			objEstudiante = EstudianteService.update(id, estudiante);
+			objEstudiante = estudianteService.update(id, estudiante);
 		}
 		return objEstudiante;
 	}
 
 	@DeleteMapping("/estudiantes/{id}")
 	public Boolean delete(@PathVariable Integer id) {
-		return this.EstudianteService.delete(id);
+		return this.estudianteService.delete(id);
 
 	}
 

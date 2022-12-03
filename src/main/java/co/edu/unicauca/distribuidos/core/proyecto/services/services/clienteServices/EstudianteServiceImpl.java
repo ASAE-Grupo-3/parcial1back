@@ -39,10 +39,15 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Transactional(readOnly = true)
 	public EstudianteDTO findById(Integer id) {
 		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		EstudianteEntity user = optional.get();
-		System.out.println("antes de la consulta");
-		EstudianteDTO EstudianteDTO = this.modelMapper.map(user, EstudianteDTO.class);
-		return EstudianteDTO;
+		EstudianteDTO estudianteDTO = null;
+		if (optional.isPresent()) {
+			System.out.println("antes de la consulta");
+			EstudianteEntity user = optional.get();
+			
+			estudianteDTO = this.modelMapper.map(user, EstudianteDTO.class);
+		}
+		
+		return estudianteDTO;
 	}
 	
 
