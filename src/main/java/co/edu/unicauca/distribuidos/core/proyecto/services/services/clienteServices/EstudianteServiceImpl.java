@@ -86,11 +86,10 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {
 		boolean bandera = false;
-		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		EstudianteEntity user = optional.get();
-		if (user != null) {
-			this.servicioAccesoBaseDatos.delete(user);
-			bandera = true;
+		
+		if (this.servicioAccesoBaseDatos.existsById(id)) {
+			this.servicioAccesoBaseDatos.deleteById(id);
+			bandera = !this.servicioAccesoBaseDatos.existsById(id);
 		}
 
 		return bandera;
