@@ -30,7 +30,7 @@ public class DireccionEntity {
 	@Column(name="tipoTelefono", nullable = false, length = 150)
 	private String tipoTelefono;
 
-	@OneToOne(optional = false, cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	@OneToOne(optional = false, cascade = { CascadeType.ALL },fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "idPersona", nullable = false)
 	private EstudianteEntity objEstudiante;

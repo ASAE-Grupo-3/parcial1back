@@ -30,7 +30,7 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Transactional(readOnly = true)
 	public List<EstudianteDTO> findAll() {
 		Iterable<EstudianteEntity> estudiantesEntity = this.servicioAccesoBaseDatos.findAll();
-		System.out.println("antes de la consulta"+ estudiantesEntity);	
+		System.out.println("antes de la consulta");	
 		List<EstudianteDTO> estudiantesDTO = this.modelMapper.map(estudiantesEntity, new TypeToken<List<EstudianteDTO>>() {}.getType());
 		return estudiantesDTO;
 	}
@@ -38,10 +38,11 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Override
 	@Transactional(readOnly = true)
 	public EstudianteDTO findById(Integer id) {
+		System.out.println("antes de la consulta");
 		Optional<EstudianteEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		EstudianteDTO estudianteDTO = null;
 		if (optional.isPresent()) {
-			System.out.println("antes de la consulta");
+			
 			EstudianteEntity user = optional.get();
 			
 			estudianteDTO = this.modelMapper.map(user, EstudianteDTO.class);

@@ -19,9 +19,9 @@ public class Mapper {
     @Bean(name = "mapperEstudiante")
     public ModelMapper modelMapperStudent() {
         ModelMapper objMapper = new ModelMapper();
-        TypeMap<EstudianteEntity, EstudianteDTO> mapa = objMapper.emptyTypeMap(EstudianteEntity.class, EstudianteDTO.class);
-        mapa.addMappings(n -> n.skip(EstudianteDTO::setObjDireccion)).implicitMappings();
-        mapa.addMappings(m -> m.skip(EstudianteDTO::setTelefonos)).implicitMappings();
+//        TypeMap<EstudianteEntity, EstudianteDTO> mapa = objMapper.emptyTypeMap(EstudianteEntity.class, EstudianteDTO.class);
+//        mapa.addMappings(n -> n.skip(EstudianteDTO::setObjDireccion)).implicitMappings();
+//        mapa.addMappings(m -> m.skip(EstudianteDTO::setTelefonos)).implicitMappings();
         return objMapper;
     }
 

@@ -44,11 +44,12 @@ public class CursoServiceImpl implements ICursoService {
 	@Override
 	@Transactional(readOnly = true)
 	public CursoDTO findById(Integer id) {
+		System.out.println("antes de la consulta");
 		CursoDTO cursoDTO = null;
 		Optional<CursoEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		if (optional.isPresent()) {
 			CursoEntity curso = optional.get();
-			System.out.println("antes de la consulta");
+			
 			cursoDTO = this.modelMapper.map(curso, CursoDTO.class);
 			cursoDTO.getObjAsignatura().setDocentes(new ArrayList<>());
 		}

@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.unicauca.distribuidos.core.proyecto.models.AsignaturaEntity;
+import co.edu.unicauca.distribuidos.core.proyecto.models.CursoEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.repositories.AsignaturaRepository;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.AsignaturaDTO;
+import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.CursoDTO;
 
 @Service
 public class AsignaturaServiceImpl implements IAsignaturaService{
@@ -49,9 +51,17 @@ public class AsignaturaServiceImpl implements IAsignaturaService{
     public AsignaturaDTO save(AsignaturaDTO asignaturaDTO) {
         AsignaturaDTO objasignaturaDTO = null;
         if(asignaturaDTO.getCursos().size() > 0 && asignaturaDTO.getDocentes().size() >= 2){
-            AsignaturaEntity asignaturaEntity = this.modelMapper.map(asignaturaDTO, AsignaturaEntity.class);
+        	
+            
+        	AsignaturaEntity asignaturaAux = new AsignaturaEntity();
+        	asignaturaAux.setNombre(asignaturaDTO.getNombre());
+        	AsignaturaEntity asignaturaSave = servicioAccesoBaseDatos.save(asignaturaAux);
+        	
+        	asignaturaDTO.setIdAsignatura(asignaturaSave.getIdAsignatura());
+        	AsignaturaEntity asignaturaEntity = this.modelMapper.map(asignaturaDTO, AsignaturaEntity.class);
             asignaturaEntity.getDocentes().forEach(objDocente -> objDocente.addAsignatura(asignaturaEntity));
             asignaturaEntity.getCursos().forEach(objCurso -> objCurso.setObjAsignatura(asignaturaEntity));
+            
 
             AsignaturaEntity objAsignaturaEntity = servicioAccesoBaseDatos.save(asignaturaEntity);
             objasignaturaDTO = this.modelMapper.map(objAsignaturaEntity, AsignaturaDTO.class);

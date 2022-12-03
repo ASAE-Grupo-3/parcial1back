@@ -3,6 +3,7 @@ package co.edu.unicauca.distribuidos.core.proyecto.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class TelefonoEntity {
     @Column(name="numero", nullable = false, length = 150)
     private String numero;
 
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(cascade = { CascadeType.ALL },fetch = FetchType.LAZY)
     @JoinColumn(name = "idPersona", nullable = false)
 	private EstudianteEntity objEstudiante;
 }

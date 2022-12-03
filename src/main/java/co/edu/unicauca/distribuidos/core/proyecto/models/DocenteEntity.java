@@ -28,7 +28,7 @@ public class DocenteEntity extends PersonaEntity{
     @Column(name="salario", nullable = false, length = 150)
     private Float salario;
 
-    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST},fetch = FetchType.LAZY)
 	@JoinTable(name="Docente_Asignatura", joinColumns = @JoinColumn(name="idPersona"), inverseJoinColumns = @JoinColumn(name="idAsignatura"))
 	private List<AsignaturaEntity> Asignaturas = new ArrayList<>();
     
