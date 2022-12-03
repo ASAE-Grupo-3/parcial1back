@@ -44,11 +44,15 @@ public class CursoServiceImpl implements ICursoService {
 	@Override
 	@Transactional(readOnly = true)
 	public CursoDTO findById(Integer id) {
+		CursoDTO cursoDTO = null;
 		Optional<CursoEntity> optional = this.servicioAccesoBaseDatos.findById(id);
-		CursoEntity curso = optional.get();
-		System.out.println("antes de la consulta");
-		CursoDTO cursoDTO = this.modelMapper.map(curso, CursoDTO.class);
-		cursoDTO.getObjAsignatura().setDocentes(new ArrayList<>());
+		if (optional.isPresent()) {
+			CursoEntity curso = optional.get();
+			System.out.println("antes de la consulta");
+			cursoDTO = this.modelMapper.map(curso, CursoDTO.class);
+			cursoDTO.getObjAsignatura().setDocentes(new ArrayList<>());
+		}
+		
 		return cursoDTO;
 	}
 	
@@ -77,14 +81,18 @@ public class CursoServiceImpl implements ICursoService {
 	@Override
 	@Transactional(readOnly = false)
 	public CursoDTO update(Integer id, CursoDTO objcursoConDatosNuevos) {
-		// TODO Auto-generated method stub
         return null;
 	}
 	
 	@Override
 	@Transactional(readOnly = false)
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		boolean estado = false;
+		if(this.servicioAccesoBaseDatos.existsById(id)) {
+			this.servicioAccesoBaseDatos.deleteById(id);
+			estado = !this.servicioAccesoBaseDatos.existsById(id);
+		}
+		return estado;
 	}
 }

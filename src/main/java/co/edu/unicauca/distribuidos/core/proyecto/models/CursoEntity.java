@@ -40,7 +40,7 @@ public class CursoEntity implements Serializable{
     @Column(name="periodo", nullable = false, length = 150)
     private String periodo;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="idAsignatura", nullable=false)
     private AsignaturaEntity objAsignatura;
 
