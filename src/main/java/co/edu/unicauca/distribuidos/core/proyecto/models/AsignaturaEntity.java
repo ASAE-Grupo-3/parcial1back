@@ -1,6 +1,5 @@
 package co.edu.unicauca.distribuidos.core.proyecto.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "Asignaturas")
-public class AsignaturaEntity implements Serializable{
+public class AsignaturaEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +39,7 @@ public class AsignaturaEntity implements Serializable{
 	@JoinTable(name = "Docente_Asignatura", joinColumns = @JoinColumn(name = "idAsignatura"), inverseJoinColumns = @JoinColumn(name = "idPersona"))
 	private List<DocenteEntity> docentes  = new ArrayList<>();
 
-	@OneToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER, mappedBy = "objAsignatura")
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "objAsignatura")
 	private List<CursoEntity> Cursos  = new ArrayList<>();
 
 }

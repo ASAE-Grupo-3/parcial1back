@@ -1,6 +1,5 @@
 package co.edu.unicauca.distribuidos.core.proyecto.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +17,7 @@ import lombok.Setter;
 @Entity
 @Setter @Getter
 @Table(name = "Docente")
-public class DocenteEntity extends PersonaEntity implements Serializable{
-	
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2861437270008402895L;
+public class DocenteEntity extends PersonaEntity{
 
 	@Column(name="universidad", nullable = false, length = 150)
     private String universidad;

@@ -12,14 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import co.edu.unicauca.distribuidos.core.proyecto.models.AsignaturaEntity;
 import co.edu.unicauca.distribuidos.core.proyecto.models.CursoEntity;
+import co.edu.unicauca.distribuidos.core.proyecto.repositories.AsignaturaRepository;
 import co.edu.unicauca.distribuidos.core.proyecto.repositories.CursoRepository;
+import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.AsignaturaDTO;
 import co.edu.unicauca.distribuidos.core.proyecto.services.DTO.CursoDTO;
 @Service
 public class CursoServiceImpl implements ICursoService {
 
     @Autowired
 	private CursoRepository servicioAccesoBaseDatos;
+    
+    @Autowired
+    private AsignaturaRepository servicioAsignatura;
 
     @Autowired
 	@Qualifier("mapperCurso")
@@ -31,6 +37,7 @@ public class CursoServiceImpl implements ICursoService {
 		Iterable<CursoEntity> cursosEntity = this.servicioAccesoBaseDatos.findAll();
 		System.out.println("antes de la consulta"+ cursosEntity);	
 		List<CursoDTO> cursosDTO = this.modelMapper.map(cursosEntity, new TypeToken<List<CursoDTO>>() {}.getType());
+		cursosDTO.forEach(t->t.getObjAsignatura().setDocentes(new ArrayList<>()));
 		return cursosDTO;
 	}
 
@@ -40,22 +47,31 @@ public class CursoServiceImpl implements ICursoService {
 		Optional<CursoEntity> optional = this.servicioAccesoBaseDatos.findById(id);
 		CursoEntity curso = optional.get();
 		System.out.println("antes de la consulta");
-		CursoDTO CursoDTO = this.modelMapper.map(curso, CursoDTO.class);
-		return CursoDTO;
+		CursoDTO cursoDTO = this.modelMapper.map(curso, CursoDTO.class);
+		cursoDTO.getObjAsignatura().setDocentes(new ArrayList<>());
+		return cursoDTO;
 	}
 	
 
 	@Override
 	@Transactional()
-	public CursoDTO save(CursoDTO curso) {
-
-		CursoEntity CursoEntity = this.modelMapper.map(curso, CursoEntity.class);
-        List<CursoEntity> cursoList = new ArrayList<>();
-        cursoList.add(CursoEntity);
-		CursoEntity.getObjAsignatura().setCursos(cursoList);
-		CursoEntity objCursoEntity = this.servicioAccesoBaseDatos.save(CursoEntity);
-		CursoDTO CursoDTO = this.modelMapper.map(objCursoEntity, CursoDTO.class);
-		return CursoDTO;
+	public CursoDTO save(CursoDTO cursoDTO) {
+		
+		AsignaturaEntity asignatura = this.servicioAsignatura.findById(cursoDTO.getObjAsignatura().getIdAsignatura()).orElse(null);
+		CursoDTO cursoRespuesta = null;
+		if (cursoDTO.getObjAsignatura()!=null && asignatura!=null) {
+			
+			CursoEntity cursoEntity = this.modelMapper.map(cursoDTO, CursoEntity.class);
+			cursoEntity.setObjAsignatura(asignatura);
+			if(cursoEntity.getObjAsignatura().getCursos()!=null)
+				cursoEntity.getObjAsignatura().getCursos().add(cursoEntity);
+			
+			CursoEntity objCursoEntity = this.servicioAccesoBaseDatos.save(cursoEntity);
+			cursoRespuesta = this.modelMapper.map(objCursoEntity, CursoDTO.class);
+			cursoRespuesta.getObjAsignatura().setDocentes(new ArrayList<>());
+		}
+		
+		return cursoRespuesta;
 	}
 
 	@Override
